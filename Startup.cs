@@ -67,8 +67,7 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        app.UseNotFoundHandler();
-        app.UseOptimizelyNotFoundHandler();
+       
 
         if (env.IsDevelopment())
         {
@@ -83,6 +82,9 @@ public class Startup
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseNotFoundHandler();
+        app.UseOptimizelyNotFoundHandler();
 
         app.UseEndpoints(endpoints => { endpoints.MapContent(); });
     }
