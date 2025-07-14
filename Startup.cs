@@ -46,8 +46,8 @@ public class Startup
         // Required by Wangkanai.Detection
         services.AddDetection();
         services.AddNotFoundHandler(o =>
-                o.UseSqlServer(connString),
-            policy => policy.RequireRole([Roles.WebAdmins,
+                o.UseSqlServer(connString),                
+        policy => policy.RequireRole([Roles.WebAdmins,
                 Roles.Administrators, Roles.CmsAdmins,
                 Roles.WebEditors, Roles.CmsEditors
                 ]));
@@ -67,7 +67,8 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-       
+        app.UseNotFoundHandler();
+        app.UseOptimizelyNotFoundHandler();
 
         if (env.IsDevelopment())
         {
@@ -83,9 +84,9 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseNotFoundHandler();
-        app.UseOptimizelyNotFoundHandler();
-
-        app.UseEndpoints(endpoints => { endpoints.MapContent(); });
+        app.UseEndpoints(endpoints => { 
+            endpoints.MapContent();
+            endpoints.MapRazorPages();
+        });
     }
 }
