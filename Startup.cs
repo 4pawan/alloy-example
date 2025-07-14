@@ -9,6 +9,7 @@ using EPiServer.Web.Routing;
 using Geta.NotFoundHandler.Infrastructure.Configuration;
 using Geta.NotFoundHandler.Infrastructure.Initialization;
 using Geta.NotFoundHandler.Optimizely.Infrastructure.Configuration;
+using Geta.NotFoundHandler.Optimizely.Infrastructure.Initialization;
 
 namespace alloy_example;
 
@@ -46,8 +47,16 @@ public class Startup
         services.AddDetection();
         services.AddNotFoundHandler(o =>
                 o.UseSqlServer(connString),
-            policy => policy.RequireRole(Roles.WebAdmins));
-        services.AddOptimizelyNotFoundHandler();
+            policy => policy.RequireRole([Roles.WebAdmins,
+                Roles.Administrators, Roles.CmsAdmins,
+                Roles.WebEditors, Roles.CmsEditors
+                ]));
+
+        services.AddOptimizelyNotFoundHandler(o =>
+        {
+            o.AutomaticRedirectsEnabled = false;
+        });
+
         services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromSeconds(10);
@@ -59,6 +68,8 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         app.UseNotFoundHandler();
+        app.UseOptimizelyNotFoundHandler();
+
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
