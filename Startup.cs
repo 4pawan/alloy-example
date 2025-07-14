@@ -46,11 +46,9 @@ public class Startup
         // Required by Wangkanai.Detection
         services.AddDetection();
         services.AddNotFoundHandler(o =>
-                o.UseSqlServer(connString),                
-        policy => policy.RequireRole([Roles.WebAdmins,
-                Roles.Administrators, Roles.CmsAdmins,
-                Roles.WebEditors, Roles.CmsEditors
-                ]));
+                o.UseSqlServer(connString),
+        policy => policy.RequireRole([Roles.WebAdmins, Roles.Administrators]
+               ));
 
         services.AddOptimizelyNotFoundHandler(o =>
         {
@@ -84,7 +82,8 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints => { 
+        app.UseEndpoints(endpoints =>
+        {
             endpoints.MapContent();
             endpoints.MapRazorPages();
         });
