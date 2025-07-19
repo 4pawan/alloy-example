@@ -1,4 +1,5 @@
-﻿using EPiServer.Shell.Navigation;
+﻿using EPiServer.Authorization;
+using EPiServer.Shell.Navigation;
 
 namespace alloy_example.Customization.Menus;
 
@@ -14,6 +15,10 @@ public class MenuProviderInterceptor : IMenuProvider
     public IEnumerable<MenuItem> GetMenuItems()
     {
         var menuItems = _menu.GetMenuItems().ToList();
+        menuItems.ForEach(item =>
+        {
+            item.AuthorizationPolicy = Roles.WebAdmins;
+        });
         return menuItems;
     }
 }
