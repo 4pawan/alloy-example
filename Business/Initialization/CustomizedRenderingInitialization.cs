@@ -20,6 +20,7 @@ public class CustomizedRenderingInitialization : IConfigurableModule
             // Register custom implementations that should be used in favour of the default implementations
             context.Services.AddTransient<IContentRenderer, ErrorHandlingContentRenderer>()
                 .AddSingleton<AlloyContentAreaItemRenderer, AlloyContentAreaItemRenderer>();
+        DependencyResolver.RegisterServices(context.Services);
     }
 
     public void Initialize(InitializationEngine context) =>
