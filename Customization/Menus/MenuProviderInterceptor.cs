@@ -18,8 +18,8 @@ public class MenuProviderInterceptor : IMenuProvider
     {
         var menuItems = _menu.GetMenuItems().ToList();
         menuItems.ForEach(item =>
-        {
-            item.AuthorizationPolicy = Roles.WebAdmins;
+        {           
+            item.AuthorizationPolicy = "episerver:cmsadmin";
         });
         return menuItems;
     }

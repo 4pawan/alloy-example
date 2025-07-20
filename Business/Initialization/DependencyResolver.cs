@@ -19,11 +19,6 @@ public class DependencyResolver
     private static IMenuProvider interceptorFactory(IServiceProvider provider1, IMenuProvider provider2)
     {
         var types = new[] { typeof(ReportsMenuProvider), typeof(DashboardMenuProvider) };
-        if (types.Any(t => t.Equals(provider2.GetType())))
-        {
-            IMenuProvider menuProvider = new MenuProviderInterceptor(provider2);
-            return menuProvider;
-        }
-        return provider2;
+        return types.Any(t => t.Equals(provider2.GetType())) ? new MenuProviderInterceptor(provider2) : provider2;
     }
 }
