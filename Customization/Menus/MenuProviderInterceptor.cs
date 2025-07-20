@@ -1,7 +1,4 @@
-﻿using EPiServer.Authorization;
-using EPiServer.Cms.Shell.UI.Dashboard.Internal;
-using EPiServer.Cms.Shell.UI.Reports.Internal;
-using EPiServer.Shell.Navigation;
+﻿using EPiServer.Shell.Navigation;
 
 namespace alloy_example.Customization.Menus;
 
